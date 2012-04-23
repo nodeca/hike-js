@@ -74,4 +74,16 @@ describe('NormalizedArray', function () {
 
     assert.equal("A", array.toArray().join(','));
   });
+
+
+  it("should throw an error on attempt to modify once frozen", function () {
+    array.append(["foo"]);
+    array.freeze();
+
+    assert.throws(function () { array.remove('foo'); });
+    assert.throws(function () { array.prepend('bar'); });
+    assert.throws(function () { array.append('bar'); });
+
+    assert.doesNotThrow(function () { array.toArray(); });
+  });
 });
