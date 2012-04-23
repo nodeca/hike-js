@@ -76,14 +76,22 @@ describe('NormalizedArray', function () {
   });
 
 
-  it("should throw an error on attempt to modify once frozen", function () {
+  it("should throw an error on attempt to modify when frozen", function () {
     array.append(["foo"]);
     array.freeze();
 
     assert.throws(function () { array.remove('foo'); });
-    assert.throws(function () { array.prepend('bar'); });
     assert.throws(function () { array.append('bar'); });
 
     assert.doesNotThrow(function () { array.toArray(); });
+  });
+
+
+  it("should allow getting indexOf() element, respecting normalization", function () {
+    array.append('foo');
+
+    assert.equal(0, array.indexOf('FOO'));
+    assert.equal(0, array.indexOf('foo'));
+    assert.equal(-1, array.indexOf('bar'));
   });
 });
