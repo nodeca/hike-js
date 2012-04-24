@@ -13,19 +13,19 @@ Examples
 Find JavaScript files in this project:
 
     trail = new hike.Trail("/home/ixti/Projects/hike-js");
-    trail.append_extension(".js");
-    trail.append_paths("lib", "test");
+    trail.extensions.append(".js");
+    trail.paths.append("lib", "test");
 
     trail.find("hike/trail");
     # => "/home/ixti/Projects/hike-js/lib/hike/trail.js"
 
-    trail.find "test_trail"
+    trail.find("test_trail");
     # => "/home/ixti/Projects/hike-js/test/test_trail.rb"
 
 Explore your shell path:
 
     trail = new hike.Trail("/");
-    trail.append_paths(process.env.PATH.split(":"));
+    trail.paths.append(process.env.PATH.split(":"));
 
     trail.find("ls");
     # => "/bin/ls"
