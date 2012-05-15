@@ -1,6 +1,8 @@
 hike
 ====
 
+[![Build Status](https://secure.travis-ci.org/nodeca/hike-js.png?branch=master)](http://travis-ci.org/nodeca/hike-js)
+
 Javascript port of [Hike (Ruby)][hike] - a library for finding files in a set
 of paths. Use it to implement search paths, load paths, and the like.
 
