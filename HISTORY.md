@@ -1,5 +1,5 @@
-0.1.1 / WIP
------------
+0.1.1 / 2012-10-13
+------------------
 
 - Fix order of paths tried upon find loop.
 
