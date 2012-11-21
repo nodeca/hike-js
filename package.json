@@ -1,8 +1,8 @@
 {
   "name"            : "hike",
   "version"         : "0.1.1",
-  "description"     : "Some really descriptive description",
-  "keywords"        : ["fresh", "meat"],
+  "description"     : "JavaScript port of Ruby's Hike, a library for finding files in a set of paths.",
+  "keywords"        : ["hike", "fs", "find", "glob"],
   "homepage"        : "https://github.com/nodeca/hike-js",
 
   "author"          : "Aleksey V Zapparov <ixti@member.fsf.org> (http://ixti.net/)",
