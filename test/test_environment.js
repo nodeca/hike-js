@@ -1,4 +1,4 @@
-/*global describe, it, before, after, beforeEach, afterEach*/
+/*global describe, it, beforeEach*/
 
 
 'use strict';
@@ -25,9 +25,6 @@ describe('Trail', function () {
 
 
   it("should find pathname respecting extension aliases", function () {
-    var asset = trail.find('app.css');
-
-    assert.ok(null !== asset, 'Asset found');
-    console.log(asset);
+    assert.ok(trail.find('app.css'), 'Asset found');
   });
 });
