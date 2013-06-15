@@ -5,8 +5,13 @@
 
 
 // stdlib
+var fs      = require('fs');
 var path    = require('path');
 var assert  = require('assert');
+
+
+// TODO: Remove once Node.JS < 0.8 support is dropped
+fs.existsSync = fs.existsSync || path.existsSync;
 
 
 // internal
@@ -18,7 +23,6 @@ function fixturePath (apath) {
 
 describe('Trail', function () {
   var trail;
-  var asset;
 
   beforeEach(function () {
     trail = new Trail(FIXTURE_ROOT);
@@ -218,7 +222,6 @@ describe('Trail', function () {
   });
 
   it("test find reflects changes in the file system", function () {
-    var fs = require('fs');
     var tempfile = fixturePath("dashboard.html");
     assert.equal(undefined, trail.find("dashboard.html"));
     try {
@@ -279,7 +282,6 @@ describe('IntexText', function () {
 
   it("test index find does not reflect changes in the file system", function () {
     // trail here is its index
-    var fs = require('fs');
     var tempfile = fixturePath("dashboard.html");
     assert(!fs.existsSync(tempfile));
     assert.equal(undefined, trail.find("dashboard.html"));
