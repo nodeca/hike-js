@@ -1,3 +1,10 @@
+0.1.2 / 2013-06-16
+------------------
+
+* Maintenance release. Replaced `underscore` with `lodash`,
+  and different minor/cosmetic changes.
+
+
 0.1.1 / 2012-10-13
 ------------------
 
