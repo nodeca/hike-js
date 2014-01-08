@@ -21,15 +21,15 @@ describe('Aliases', function () {
   });
 
 
-  it("should always return an instance of Extensions", function () {
+  it('should always return an instance of Extensions', function () {
     aliases.append('foo', 'bar');
 
-    assert.equal(".bar",  aliases.get('foo').toArray().join(','));
-    assert.equal("",      aliases.get('moo').toArray().join(','));
+    assert.equal('.bar',  aliases.get('foo').toArray().join(','));
+    assert.equal('',      aliases.get('moo').toArray().join(','));
   });
 
 
-  it("should throw an error on attempt to modify when frozen", function () {
+  it('should throw an error on attempt to modify when frozen', function () {
     aliases.append('foo', 'bar');
     aliases.freeze();
 
@@ -42,7 +42,7 @@ describe('Aliases', function () {
   });
 
 
-  it("should freeze inner Extensions collections when frozen", function () {
+  it('should freeze inner Extensions collections when frozen', function () {
     aliases.append('foo', 'bar');
     aliases.freeze();
 

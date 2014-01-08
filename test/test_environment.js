@@ -24,7 +24,7 @@ describe('Trail', function () {
   });
 
 
-  it("should find pathname respecting extension aliases", function () {
+  it('should find pathname respecting extension aliases', function () {
     assert.ok(trail.find('app.css'), 'Asset found');
   });
 });
