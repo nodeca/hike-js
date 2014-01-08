@@ -1,7 +1,13 @@
+0.1.3 / 2014-01-08
+------------------
+
+- Maintenance release. Dependencies & lint rules update.
+
+
 0.1.2 / 2013-06-16
 ------------------
 
-* Maintenance release. Replaced `underscore` with `lodash`,
+- Maintenance release. Replaced `underscore` with `lodash`,
   and different minor/cosmetic changes.
 
 

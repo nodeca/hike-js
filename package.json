@@ -1,6 +1,6 @@
 {
   "name"            : "hike",
-  "version"         : "0.1.2",
+  "version"         : "0.1.3",
   "description"     : "JavaScript port of Ruby's Hike, a library for finding files in a set of paths.",
   "keywords"        : ["hike", "fs", "find", "glob"],
   "homepage"        : "https://github.com/nodeca/hike-js",
