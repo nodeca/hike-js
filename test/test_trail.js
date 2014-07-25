@@ -236,6 +236,7 @@ describe('Trail', function () {
 });
 
 describe('IntexText', function () {
+  var originalTrail;
   var trail;
   var asset;
 
@@ -245,6 +246,7 @@ describe('IntexText', function () {
     trail.extensions.append('builder', 'coffee', 'str', '.erb');
     trail.aliases.append('html', 'htm', 'xhtml', 'php');
     trail.aliases.append('js', 'coffee');
+    originalTrail = trail;
     trail = trail.index;
   });
 
@@ -289,6 +291,29 @@ describe('IntexText', function () {
       fs.writeFileSync(tempfile, '');
       asset = trail.find('dashboard.html');
       assert.equal(undefined, asset);
+    } finally {
+      fs.unlinkSync(tempfile);
+      assert(!fs.existsSync(tempfile));
+    }
+  });
+
+  it('test index stat does not reflect changes in the file system', function () {
+    var tempfile = fixturePath('dashboard.html');
+    var firstStat;
+    var secondStat;
+    try {
+      firstStat = trail.stat(tempfile);
+      fs.writeFileSync(tempfile, '');
+      secondStat = trail.stat(tempfile);
+      assert.equal(null, firstStat);
+      assert.equal(null, secondStat);
+
+      var index = originalTrail.index;
+      firstStat = index.stat(tempfile);
+      // write to file to change mtime
+      fs.writeFileSync(tempfile, '');
+      secondStat = index.stat(tempfile);
+      assert.equal(firstStat.mtime, secondStat.mtime);
     } finally {
       fs.unlinkSync(tempfile);
       assert(!fs.existsSync(tempfile));
