@@ -92,8 +92,7 @@ publish:
 		exit 128 ; \
 		fi
 	git tag ${NPM_VERSION} && git push origin ${NPM_VERSION}
-	npm publish https://github.com/${GITHUB_PROJ}/tarball/${NPM_VERSION}
-
+	npm publish https://github.com/${GITHUB_PROJ}/archive/${NPM_VERSION}.tar.gz
 
 todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
