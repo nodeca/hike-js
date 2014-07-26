@@ -1,3 +1,10 @@
+0.1.4 / 2014-07-26
+------------------
+
+- Perfomance: don't create index for each uncached call.
+- Cache should keep results for missed files too.
+
+
 0.1.3 / 2014-01-08
 ------------------
 
