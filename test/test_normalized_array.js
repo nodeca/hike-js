@@ -9,12 +9,7 @@ var assert = require('assert');
 
 
 // internal
-var NormalizedArray = require('../lib/hike/normalized_array');
-
-
-function UppercaseArray() { NormalizedArray.call(this); }
-require('util').inherits(UppercaseArray, NormalizedArray);
-UppercaseArray.prototype.normalize = function (el) { return el.toUpperCase(); };
+var NormalizedArray = require('../lib/normalized_array');
 
 
 describe('NormalizedArray', function () {
@@ -22,73 +17,52 @@ describe('NormalizedArray', function () {
 
 
   beforeEach(function () {
-    array = new UppercaseArray();
+    array = new NormalizedArray(function(el) {
+      return el.toUpperCase();
+    });
   });
 
 
   it('should normalize prepended elements', function () {
-    array.prepend(['a', 'b', 'c']);
-    assert.equal('A,B,C', array.toArray().join(','));
-  });
-
-
-  it('should flatten array with prepended elements', function () {
-    array.prepend([[['a', 'b', 'c']]]);
-    assert.equal('A,B,C', array.toArray().join(','));
+    array.push('a', 'b', 'c');
+    assert.equal('A,B,C', array.join(','));
   });
 
 
   it('should insert prepended elements to the head', function () {
-    array.prepend(['a']);
-    array.prepend(['b']);
-    array.prepend(['c']);
-    assert.equal('C,B,A', array.toArray().join(','));
+    array.unshift('a');
+    array.unshift('b');
+    array.unshift('c');
+    assert.equal('C,B,A', array.join(','));
   });
 
 
   it('should push appended elements to the tail', function () {
-    array.append(['a']);
-    array.append(['b']);
-    array.append(['c']);
-    assert.equal('A,B,C', array.toArray().join(','));
+    array.push('a');
+    array.push('b');
+    array.push('c');
+    assert.equal('A,B,C', array.join(','));
   });
 
 
   it('should normalize appended elements', function () {
-    array.append(['a', 'b', 'c']);
-    assert.equal('A,B,C', array.toArray().join(','));
-  });
-
-
-  it('should flatten array with appended elements', function () {
-    array.append([[['a', 'b', 'c']]]);
-    assert.equal('A,B,C', array.toArray().join(','));
+    array.push('a', 'b', 'c');
+    assert.equal('A,B,C', array.join(','));
   });
 
 
   it('should allow remove element, respecting normalization', function () {
-    array.append(['a', 'b', 'c']);
+    array.push('a', 'b', 'c');
 
-    array.remove('b');
-    array.remove('C');
+    array.splice(array.indexOf('b'), 1);
+    array.splice(array.indexOf('C'), 1);
 
-    assert.equal('A', array.toArray().join(','));
-  });
-
-
-  it('should throw an error on attempt to modify when frozen', function () {
-    array.append(['foo']);
-    array.freeze();
-
-    assert.throws(function () { array.remove('foo'); });
-    assert.throws(function () { array.append('bar'); });
-
-    assert.doesNotThrow(function () { array.toArray(); });
+    assert.equal('A', array.join(','));
   });
 
 
   it('should allow getting indexOf() element, respecting normalization', function () {
-    array.append('foo');
+    array.push('foo');
 
     assert.equal(0, array.indexOf('FOO'));
     assert.equal(0, array.indexOf('foo'));

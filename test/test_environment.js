@@ -10,7 +10,7 @@ var assert  = require('assert');
 
 
 // internal
-var Trail = require('../lib/hike/trail');
+var Trail = require('../').Trail;
 
 
 describe('Trail', function () {
@@ -19,8 +19,8 @@ describe('Trail', function () {
 
   beforeEach(function () {
     trail = new Trail(path.join(__dirname, 'fixtures'));
-    trail.paths.append('assets/css');
-    trail.aliases.append('css', 'styl');
+    trail.append_paths('assets/css');
+    trail.alias_extension('styl', 'css');
   });
 
 
