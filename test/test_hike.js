@@ -1,35 +1,33 @@
 /*global describe, it, beforeEach*/
 
-
 'use strict';
-
 
 // stdlib
 var fs      = require('fs');
 var path    = require('path');
 var assert  = require('assert');
 
-
 // TODO: Remove once Node.JS < 0.8 support is dropped
 fs.existsSync = fs.existsSync || path.existsSync;
 
-
 // internal
-var Trail = require('../lib/hike/trail');
-var FIXTURE_ROOT = path.join(__dirname, 'fixtures');
-function fixturePath (apath) {
-  return path.join(FIXTURE_ROOT, apath);
+var Hike          = require('..');
+var FIXTURE_ROOT  = path.join(__dirname, 'fixtures');
+
+function fixturePath (relPath) {
+  return path.join(FIXTURE_ROOT, relPath);
 }
 
-describe('Trail', function () {
+describe('Hike', function () {
   var trail;
 
   beforeEach(function () {
-    trail = new Trail(FIXTURE_ROOT);
-    trail.paths.append('app/views', 'vendor/plugins/signal_id/app/views', '.');
-    trail.extensions.append('builder', 'coffee', 'str', '.erb');
-    trail.aliases.append('html', 'htm', 'xhtml', 'php');
-    trail.aliases.append('js', 'coffee');
+    trail = new Hike(FIXTURE_ROOT);
+    trail.appendPaths(['app/views', 'vendor/plugins/signal_id/app/views', '.']);
+    trail.appendExtensions(['builder', 'coffee', 'str', '.erb']);
+    trail.aliasExtension('html', ['htm', 'xhtml', 'php']);
+    trail.aliasExtension('js', 'coffee');
+    trail.aliasExtension('css', 'styl');
   });
 
   it('test trail root', function () {
@@ -37,20 +35,26 @@ describe('Trail', function () {
   });
 
   it('test trail paths', function () {
-    assert.deepEqual([fixturePath('app/views'),
+    var expectedPaths = [
+      fixturePath('app/views'),
       fixturePath('vendor/plugins/signal_id/app/views'),
-      fixturePath('.')], trail.paths.toArray());
+      fixturePath('.')
+    ];
+
+    assert.deepEqual(expectedPaths, trail.paths);
   });
 
   it('test trail extensions', function () {
-    assert.deepEqual(['.builder', '.coffee', '.str', '.erb'], trail.extensions.toArray());
+    var expectedExtensions = ['.builder', '.coffee', '.str', '.erb'];
+
+    assert.deepEqual(expectedExtensions, trail.extensions);
   });
 
   it('test trail index', function () {
     // assert_kind_of Hike::Index, trail.index
     // what's the js equivalent?
-    assert.equal(trail.root, trail.index.root);
-    assert.deepEqual({}, trail.index.__entries__);
+    assert.equal(trail.root, trail.cached.root);
+    assert.deepEqual({}, trail.cached.__entries__);
     assert.equal(undefined, trail.__entries__);
   });
 
@@ -77,7 +81,7 @@ describe('Trail', function () {
     assert.equal( fixturePath('app/views/layouts/interstitial.html.erb'),
       trail.find('layouts/interstitial.html'));
     // trail = new_trail { |t| t.paths.replace t.paths.reverse }
-    trail.paths.prepend('vendor/plugins/signal_id/app/views');
+    trail.prependPaths('vendor/plugins/signal_id/app/views');
     assert.equal( fixturePath('vendor/plugins/signal_id/app/views/layouts/interstitial.html.erb'),
       trail.find('layouts/interstitial.html'));
   });
@@ -86,7 +90,7 @@ describe('Trail', function () {
     assert.equal( fixturePath('app/views/recordings/index.atom.builder'),
       trail.find('recordings/index.atom'));
     // trail = new_trail { |t| t.paths.replace t.paths.reverse }
-    trail.extensions.prepend('erb');
+    trail.prependExtensions('erb');
     assert.equal( fixturePath('app/views/recordings/index.atom.erb'),
       trail.find('recordings/index.atom'));
   });
@@ -117,7 +121,7 @@ describe('Trail', function () {
       fixturePath('app/views/application.js.coffee.str'),
       trail.find('application.js'));
     // trail = new_trail { |t| t.paths.replace t.paths.reverse }
-    trail.extensions.prepend('erb');
+    trail.prependExtensions('erb');
     assert.equal( fixturePath('app/views/application.js.coffee.erb'),
       trail.find('application.js'));
   });
@@ -161,10 +165,11 @@ describe('Trail', function () {
 
   it('test relative files must exist in the path', function () {
     assert.doesNotThrow(function () {
-      require('fs').statSync(path.join(FIXTURE_ROOT, '../test_trail.js'));
+      require('fs').statSync(path.join(FIXTURE_ROOT, '../test_hike.js'));
     });
+
     assert.equal(undefined,
-      trail.find('../test_trail.js', {'basePath': FIXTURE_ROOT}));
+      trail.find('../test_hike.js', {'basePath': FIXTURE_ROOT}));
   });
 
   it('test find all respects path order', function () {
@@ -233,21 +238,25 @@ describe('Trail', function () {
     }
   });
 
+  it('should find pathname respecting extension aliases', function () {
+    trail.appendPaths('assets/css');
+    assert.ok(trail.find('app.css'), 'Asset found');
+  });
 });
 
-describe('IntexText', function () {
+describe('Trail#cached', function () {
   var originalTrail;
   var trail;
   var asset;
 
   beforeEach(function () {
-    trail = new Trail(FIXTURE_ROOT);
-    trail.paths.append('app/views', 'vendor/plugins/signal_id/app/views', '.');
-    trail.extensions.append('builder', 'coffee', 'str', '.erb');
-    trail.aliases.append('html', 'htm', 'xhtml', 'php');
-    trail.aliases.append('js', 'coffee');
+    trail = new Hike(FIXTURE_ROOT);
+    trail.appendPaths(['app/views', 'vendor/plugins/signal_id/app/views', '.']);
+    trail.appendExtensions(['builder', 'coffee', 'str', '.erb']);
+    trail.aliasExtension('html', ['htm', 'xhtml', 'php']);
+    trail.aliasExtension('js', 'coffee');
     originalTrail = trail;
-    trail = trail.index;
+    trail = trail.cached;
   });
 
   // rb reruns most of previous tests using this trail.index
@@ -259,26 +268,26 @@ describe('IntexText', function () {
   });
 
   it('test changing trail path doesnt affect index', function () {
-    var trail = new Trail(FIXTURE_ROOT);
-    trail.paths.append('.');
-    var index = trail.index;
-    assert.deepEqual([fixturePath('.')], trail.paths.toArray());
-    assert.deepEqual([fixturePath('.')], index.paths.toArray());
-    trail.paths.append('app/views');
-    assert.deepEqual([fixturePath('.'), fixturePath('app/views')], trail.paths.toArray());
-    assert.deepEqual([fixturePath('.')], index.paths.toArray());
+    var trail = new Hike(FIXTURE_ROOT);
+    trail.appendPaths('.');
+    var index = trail.cached;
+    assert.deepEqual([fixturePath('.')], trail.paths);
+    assert.deepEqual([fixturePath('.')], index.paths);
+    trail.appendPaths('app/views');
+    assert.deepEqual([fixturePath('.'), fixturePath('app/views')], trail.paths);
+    assert.deepEqual([fixturePath('.')], index.paths);
   });
 
 
   it('test changing trail extensions doesnt affect index', function () {
-    var trail = new Trail(FIXTURE_ROOT);
-    trail.extensions.append('builder');
-    var index = trail.index;
-    assert.deepEqual(['.builder'], trail.extensions.toArray());
-    assert.deepEqual(['.builder'], index.extensions.toArray());
-    trail.extensions.append('str');
-    assert.deepEqual(['.builder', '.str'], trail.extensions.toArray());
-    assert.deepEqual(['.builder'], index.extensions.toArray());
+    var trail = new Hike(FIXTURE_ROOT);
+    trail.appendExtensions('builder');
+    var index = trail.cached;
+    assert.deepEqual(['.builder'], trail.extensions);
+    assert.deepEqual(['.builder'], index.extensions);
+    trail.appendExtensions('str');
+    assert.deepEqual(['.builder', '.str'], trail.extensions);
+    assert.deepEqual(['.builder'], index.extensions);
   });
 
 
@@ -308,7 +317,7 @@ describe('IntexText', function () {
       assert.equal(null, firstStat);
       assert.equal(null, secondStat);
 
-      var index = originalTrail.index;
+      var index = originalTrail.cached;
       firstStat = index.stat(tempfile);
       // write to file to change mtime
       fs.writeFileSync(tempfile, '');
@@ -319,5 +328,4 @@ describe('IntexText', function () {
       assert(!fs.existsSync(tempfile));
     }
   });
-
 });
