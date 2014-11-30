@@ -45,7 +45,7 @@ Installation
 License
 -------
 
-Copyright (c) 2012 Vitaly Puzrin
+Copyright (c) 2014 Vitaly Puzrin, Aleksey V Zapparov
 
 Released under the MIT license. See [LICENSE][license] for details.
 
