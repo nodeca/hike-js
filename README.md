@@ -3,7 +3,7 @@ hike
 
 [![Build Status](https://travis-ci.org/nodeca/hike-js.png?branch=master)](https://travis-ci.org/nodeca/hike-js)
 
-Javascript port of [Hike (Ruby)][hike] - a library for finding files in a set
+Inspired by [Hike (Ruby)][hike-rb] - a library for finding files in a set
 of paths. Use it to implement search paths, load paths, and the like.
 
 See [API docs][apidoc] for details on methods.
@@ -14,20 +14,20 @@ Examples
 
 Find JavaScript files in this project:
 
-    trail = new hike.Trail("/home/ixti/Projects/hike-js");
-    trail.extensions.append(".js");
-    trail.paths.append("lib", "test");
+    trail = new Hike("/home/ixti/Projects/hike-js");
+    trail.appendExtensions([".js"]);
+    trail.appendPaths(["lib", "test"]);
 
-    trail.find("hike/trail");
-    # => "/home/ixti/Projects/hike-js/lib/hike/trail.js"
+    trail.find("hike");
+    # => "/home/ixti/Projects/hike-js/lib/hike.js"
 
-    trail.find("test_trail");
-    # => "/home/ixti/Projects/hike-js/test/test_trail.rb"
+    trail.find("test_hike");
+    # => "/home/ixti/Projects/hike-js/test/test_hike.rb"
 
 Explore your shell path:
 
-    trail = new hike.Trail("/");
-    trail.paths.append(process.env.PATH.split(":"));
+    trail = new Hike("/");
+    trail.appendPaths(process.env.PATH.split(":"));
 
     trail.find("ls");
     # => "/bin/ls"
@@ -50,6 +50,6 @@ Copyright (c) 2012 Vitaly Puzrin
 Released under the MIT license. See [LICENSE][license] for details.
 
 
-[hike]:     https://github.com/sstephenson/hike/
+[hike-rb]:  https://github.com/sstephenson/hike/
 [apidoc]:   http://nodeca.github.com/hike-js/
 [license]:  https://raw.github.com/nodeca/hike-js/master/LICENSE
