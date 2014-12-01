@@ -23,9 +23,9 @@ describe('Hike', function () {
 
   beforeEach(function () {
     trail = new Hike(FIXTURE_ROOT);
-    trail.appendPaths(['app/views', 'vendor/plugins/signal_id/app/views', '.']);
-    trail.appendExtensions(['builder', 'coffee', 'str', '.erb']);
-    trail.aliasExtension('html', ['htm', 'xhtml', 'php']);
+    trail.appendPaths([ 'app/views', 'vendor/plugins/signal_id/app/views', '.' ]);
+    trail.appendExtensions([ 'builder', 'coffee', 'str', '.erb' ]);
+    trail.aliasExtension('html', [ 'htm', 'xhtml', 'php' ]);
     trail.aliasExtension('js', 'coffee');
     trail.aliasExtension('css', 'styl');
   });
@@ -45,7 +45,7 @@ describe('Hike', function () {
   });
 
   it('test trail extensions', function () {
-    var expectedExtensions = ['.builder', '.coffee', '.str', '.erb'];
+    var expectedExtensions = [ '.builder', '.coffee', '.str', '.erb' ];
 
     assert.deepEqual(expectedExtensions, trail.extensions);
   });
@@ -97,7 +97,7 @@ describe('Hike', function () {
 
   it('test find with multiple logical paths returns first match', function () {
     assert.equal(fixturePath('app/views/recordings/index.html.erb'),
-      trail.find(['recordings/index.txt', 'recordings/index.html', 'recordings/index.atom']));
+      trail.find([ 'recordings/index.txt', 'recordings/index.html', 'recordings/index.atom' ]));
   // no recordings/index.txt.*
   });
 
@@ -150,17 +150,17 @@ describe('Hike', function () {
 
   it('test find with base path option and relative logical path', function () {
     assert.equal(fixturePath('app/views/projects/index.html.erb'),
-      trail.find('./index.html', {'basePath': fixturePath('app/views/projects')}));
+      trail.find('./index.html', { 'basePath': fixturePath('app/views/projects') }));
   });
 
   it('test find ignores base path option when logical path is not relative', function () {
     assert.equal(fixturePath('app/views/index.html.erb'),
-      trail.find('index.html', {'basePath': fixturePath('app/views/projects')}));
+      trail.find('index.html', { 'basePath': fixturePath('app/views/projects') }));
   });
 
   it('test base path option must be expanded', function () {
     assert.equal(undefined,
-      trail.find('./index.html', {'basePath': 'app/views/projects'}));
+      trail.find('./index.html', { 'basePath': 'app/views/projects' }));
   });
 
   it('test relative files must exist in the path', function () {
@@ -169,7 +169,7 @@ describe('Hike', function () {
     });
 
     assert.equal(undefined,
-      trail.find('../test_hike.js', {'basePath': FIXTURE_ROOT}));
+      trail.find('../test_hike.js', { 'basePath': FIXTURE_ROOT }));
   });
 
   it('test find all respects path order', function () {
@@ -251,9 +251,9 @@ describe('Trail#cached', function () {
 
   beforeEach(function () {
     trail = new Hike(FIXTURE_ROOT);
-    trail.appendPaths(['app/views', 'vendor/plugins/signal_id/app/views', '.']);
-    trail.appendExtensions(['builder', 'coffee', 'str', '.erb']);
-    trail.aliasExtension('html', ['htm', 'xhtml', 'php']);
+    trail.appendPaths([ 'app/views', 'vendor/plugins/signal_id/app/views', '.' ]);
+    trail.appendExtensions([ 'builder', 'coffee', 'str', '.erb' ]);
+    trail.aliasExtension('html', [ 'htm', 'xhtml', 'php' ]);
     trail.aliasExtension('js', 'coffee');
     originalTrail = trail;
     trail = trail.cached;
@@ -268,26 +268,26 @@ describe('Trail#cached', function () {
   });
 
   it('test changing trail path doesnt affect index', function () {
-    var trail = new Hike(FIXTURE_ROOT);
+    trail = new Hike(FIXTURE_ROOT);
     trail.appendPaths('.');
     var index = trail.cached;
-    assert.deepEqual([fixturePath('.')], trail.paths);
-    assert.deepEqual([fixturePath('.')], index.paths);
+    assert.deepEqual([ fixturePath('.') ], trail.paths);
+    assert.deepEqual([ fixturePath('.') ], index.paths);
     trail.appendPaths('app/views');
-    assert.deepEqual([fixturePath('.'), fixturePath('app/views')], trail.paths);
-    assert.deepEqual([fixturePath('.')], index.paths);
+    assert.deepEqual([ fixturePath('.'), fixturePath('app/views') ], trail.paths);
+    assert.deepEqual([ fixturePath('.') ], index.paths);
   });
 
 
   it('test changing trail extensions doesnt affect index', function () {
-    var trail = new Hike(FIXTURE_ROOT);
+    trail = new Hike(FIXTURE_ROOT);
     trail.appendExtensions('builder');
     var index = trail.cached;
-    assert.deepEqual(['.builder'], trail.extensions);
-    assert.deepEqual(['.builder'], index.extensions);
+    assert.deepEqual([ '.builder' ], trail.extensions);
+    assert.deepEqual([ '.builder' ], index.extensions);
     trail.appendExtensions('str');
-    assert.deepEqual(['.builder', '.str'], trail.extensions);
-    assert.deepEqual(['.builder'], index.extensions);
+    assert.deepEqual([ '.builder', '.str' ], trail.extensions);
+    assert.deepEqual([ '.builder' ], index.extensions);
   });
 
 
