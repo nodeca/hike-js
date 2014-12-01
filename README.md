@@ -1,7 +1,9 @@
 hike
 ====
 
-[![Build Status](https://travis-ci.org/nodeca/hike-js.png?branch=master)](https://travis-ci.org/nodeca/hike-js)
+[![Build Status](https://travis-ci.org/nodeca/hike-js.svg?branch=master)](https://travis-ci.org/nodeca/hike-js)
+[![NPM version](https://img.shields.io/npm/v/hike.svg)](https://www.npmjs.org/package/hike)
+
 
 Inspired by [Hike (Ruby)][hike-rb] - a library for finding files in a set
 of paths. Use it to implement search paths, load paths, and the like.
