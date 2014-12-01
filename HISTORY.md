@@ -1,3 +1,10 @@
+1.0.0 / 2014-12-01
+------------------
+
+- Full rewrite. Removed all ruby-style madness.
+- We no longer support it as port. Library is now for internal mincer use only.
+
+
 0.1.4 / 2014-07-26
 ------------------
 

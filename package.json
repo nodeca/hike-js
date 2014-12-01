@@ -1,13 +1,7 @@
 {
   "name": "hike",
   "version": "0.1.4",
-  "description": "JavaScript port of Ruby's Hike, a library for finding files in a set of paths.",
-  "keywords": [
-    "hike",
-    "fs",
-    "find",
-    "glob"
-  ],
+  "description": "Multihome files search library for mincer",
   "homepage": "https://github.com/nodeca/hike-js",
   "author": "Aleksey V Zapparov <ixti@member.fsf.org> (http://ixti.net/)",
   "bugs": {
