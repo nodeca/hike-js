@@ -5,10 +5,9 @@ hike
 [![NPM version](https://img.shields.io/npm/v/hike.svg)](https://www.npmjs.org/package/hike)
 
 Inspired by [Hike (Ruby)](https://github.com/sstephenson/hike/) - a library for
-finding files in a set of paths. It's done specially for
-[mincer](https://github.com/nodeca/mincer) to simplify maintenance and not
-recommended for direct use in other projects. Please remember, we don't accept
-feature requests not related to mincer improvments.
+finding files in a set of paths. It's only purpose is to simplify maintenance of
+[mincer](https://github.com/nodeca/mincer). No pull requests are accepted unless
+they are related to mincer needs.
 
 See [API docs](https://nodeca.github.io/hike-js/) for details on methods.
 
