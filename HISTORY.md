@@ -1,3 +1,9 @@
+Unreleased changes
+------------------
+
+- Remove obsolete `lodash` dependency.
+
+
 1.0.0 / 2014-12-01
 ------------------
 

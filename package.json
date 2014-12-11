@@ -19,9 +19,6 @@
   "scripts": {
     "test": "make test"
   },
-  "dependencies": {
-    "lodash": "~ 2.4.1"
-  },
   "devDependencies": {
     "mocha": "*",
     "eslint": "0.10.0",
