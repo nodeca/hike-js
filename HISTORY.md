@@ -1,7 +1,8 @@
-Unreleased changes
+1.0.1 / 2014-12-12
 ------------------
 
 - Remove obsolete `lodash` dependency.
+- Set default root to '.' if nothing passed to constructor.
 
 
 1.0.0 / 2014-12-01

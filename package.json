@@ -1,6 +1,6 @@
 {
   "name": "hike",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Multihome files search library for mincer",
   "homepage": "https://github.com/nodeca/hike-js",
   "author": "Aleksey V Zapparov <ixti@member.fsf.org> (http://ixti.net/)",
