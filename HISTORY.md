@@ -1,3 +1,9 @@
+1.0.2 / WIP
+------------------
+
+- More strict properties check to avoid collisions withmodified prototypes, #13.
+
+
 1.0.1 / 2014-12-12
 ------------------
 
